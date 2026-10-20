@@ -1,0 +1,178 @@
+* {
+  box-sizing: border-box;
+}
+
+:root {
+  --page-width: 210mm;
+  --page-height: 297mm;
+  --page-padding: 20mm;
+  --editor-font-size: 14pt;
+  --page-background: #ffffff;
+  --app-background: #e9edf2;
+  --toolbar-background: #ffffff;
+  --border-color: #d0d5dd;
+}
+
+body {
+  margin: 0;
+  background: var(--app-background);
+  color: #222222;
+  font-family: Arial, "Noto Sans Bengali", sans-serif;
+}
+
+.app-header {
+  padding: 16px;
+  text-align: center;
+  background: #ffffff;
+  border-bottom: 1px solid var(--border-color);
+}
+
+.app-header h1 {
+  margin: 0;
+  font-size: 24px;
+}
+
+.app-header p {
+  margin: 5px 0 0;
+  color: #667085;
+  font-size: 13px;
+}
+
+.toolbar {
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: center;
+  gap: 8px;
+  padding: 12px;
+  background: var(--toolbar-background);
+  border-bottom: 1px solid var(--border-color);
+  box-shadow: 0 2px 5px rgb(0 0 0 / 5%);
+}
+
+.toolbar button,
+.toolbar select,
+.toolbar input {
+  min-height: 34px;
+  border: 1px solid #c8cdd5;
+  border-radius: 5px;
+  background: #ffffff;
+  padding: 5px 9px;
+  font-size: 13px;
+  cursor: pointer;
+}
+
+.toolbar button:hover {
+  background: #eef4ff;
+}
+
+.toolbar label {
+  font-size: 12px;
+}
+
+.toolbar-divider {
+  height: 25px;
+  border-left: 1px solid #d0d5dd;
+}
+
+.document-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 22px;
+  padding: 24px 12px 48px;
+}
+
+.a4-page {
+  position: relative;
+  flex: none;
+  width: var(--page-width);
+  height: var(--page-height);
+  padding: var(--page-padding);
+  background: var(--page-background);
+  box-shadow: 0 2px 12px rgb(0 0 0 / 15%);
+  overflow: hidden;
+}
+
+.editor-page {
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  outline: none;
+  white-space: normal;
+  overflow-wrap: anywhere;
+  font-family: "SolaimanLipi", "Noto Sans Bengali", serif;
+  font-size: var(--editor-font-size);
+  line-height: 1.65;
+  color: #111111;
+  direction: ltr;
+  text-align: left;
+}
+
+.editor-page:empty::before {
+  content: "এখানে লেখা শুরু করুন...";
+  color: #a0a0a0;
+  pointer-events: none;
+}
+
+.editor-page p {
+  margin: 0 0 0.55em;
+}
+
+.editor-page [dir="rtl"] {
+  direction: rtl;
+  text-align: right;
+}
+
+.page-footer {
+  position: absolute;
+  bottom: 7mm;
+  left: 0;
+  right: 0;
+  text-align: center;
+  color: #777777;
+  font-size: 10pt;
+  pointer-events: none;
+}
+
+@media screen and (max-width: 850px) {
+  .toolbar {
+    position: static;
+    justify-content: flex-start;
+  }
+
+  .document-container {
+    align-items: flex-start;
+    overflow-x: auto;
+  }
+
+  .a4-page {
+    transform-origin: top left;
+  }
+}
+
+@media print {
+  body {
+    background: #ffffff;
+  }
+
+  .app-header,
+  .toolbar {
+    display: none !important;
+  }
+
+  .document-container {
+    padding: 0;
+    gap: 0;
+  }
+
+  .a4-page {
+    margin: 0;
+    box-shadow: none;
+    break-after: page;
+    page-break-after: always;
+  }
+}
