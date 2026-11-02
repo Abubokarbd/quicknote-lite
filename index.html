@@ -3,92 +3,57 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>QuickNote Lite</title>
-
-  <link rel="stylesheet" href="css/style.css">
-
-  <link rel="stylesheet"
-        href="https://fonts.googleapis.com/css2?family=Noto+Sans+Bengali:wght@400;500;700&display=swap">
-
+  <title>QuickNote - Smart Note Maker</title>
+  
+  <!-- SolaimanLipi Font -->
+  <link href="https://fonts.maateen.me/solaiman-lipi/font.css" rel="stylesheet">
+  
+  <!-- HTML2Canvas & jsPDF Libraries -->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
-
-  <script defer src="js/pagination.js"></script>
-  <script defer src="js/editor.js"></script>
-  <script defer src="js/formatting.js"></script>
-  <script defer src="js/export-pdf.js"></script>
-  <script defer src="js/export-png.js"></script>
-  <script defer src="js/app.js"></script>
+  
+  <!-- CSS Stylesheets -->
+  <link rel="stylesheet" href="css/base.css">
+  <link rel="stylesheet" href="css/toolbar.css">
+  <link rel="stylesheet" href="css/page.css">
 </head>
-
 <body>
-  <header class="app-header">
-    <h1>QuickNote Lite</h1>
-    <p>Lightweight A4 document editor</p>
-  </header>
+  
+  <div class="app-container">
+    <!-- Toolbar -->
+    <div class="toolbar">
+      <div class="control-group">
+        <label>এলাইনমেন্ট:</label>
+        <button onclick="setTextAlign('left')">বাম</button>
+        <button onclick="setTextAlign('center')">মাঝখান</button>
+        <button onclick="setTextAlign('right')">ডান</button>
+        <button onclick="setTextAlign('justify')">জাস্টিফাই</button>
+      </div>
 
-  <nav class="toolbar" aria-label="Formatting toolbar">
-    <button type="button" data-command="bold" title="Bold">
-      <strong>B</strong>
-    </button>
+      <div class="control-group">
+        <label>ফন্ট সাইজ:</label>
+        <input type="number" id="fontSizeInput" value="18" min="12" max="40" onchange="changeFontSize(this.value)">
+        <span>px</span>
+      </div>
 
-    <button type="button" data-command="italic" title="Italic">
-      <em>I</em>
-    </button>
+      <div class="control-group">
+        <button class="btn-secondary" id="pdfBtn" onclick="exportToPDF()">PDF ডাউনলোড</button>
+        <button class="btn-secondary" id="pngBtn" onclick="exportToPNG()">PNG ডাউনলোড</button>
+      </div>
+    </div>
 
-    <button type="button" data-command="underline" title="Underline">
-      <u>U</u>
-    </button>
+    <!-- Container for A4 Pages -->
+    <div id="documentPages">
+      <div class="a4-page" id="page-1">
+        <div class="editor-page" contenteditable="true" placeholder="এখানে লেখা টাইপ বা পেস্ট করুন..." oninput="handleInput(this)" onpaste="handlePaste(event, this)"></div>
+        <div class="page-footer" style="display:none;">পৃষ্ঠা ১</div>
+      </div>
+    </div>
+  </div>
 
-    <span class="toolbar-divider"></span>
-
-    <button type="button" data-align="left" title="Align left">Left</button>
-    <button type="button" data-align="center" title="Align center">Center</button>
-    <button type="button" data-align="right" title="Align right">Right</button>
-    <button type="button" data-align="justify" title="Justify">Justify</button>
-
-    <span class="toolbar-divider"></span>
-
-    <label for="font-size">Font size</label>
-    <select id="font-size">
-      <option value="12">12</option>
-      <option value="14" selected>14</option>
-      <option value="16">16</option>
-      <option value="18">18</option>
-      <option value="20">20</option>
-      <option value="24">24</option>
-      <option value="28">28</option>
-      <option value="32">32</option>
-    </select>
-
-    <label for="text-color">Text color</label>
-    <input id="text-color" type="color" value="#000000">
-
-    <span class="toolbar-divider"></span>
-
-    <button type="button" id="add-page">Add page</button>
-    <button type="button" id="download-pdf">Download PDF</button>
-    <button type="button" id="download-png">Download PNG</button>
-  </nav>
-
-  <main id="document-container" class="document-container">
-    <section class="a4-page">
-      <div class="editor-page"
-           contenteditable="true"
-           spellcheck="true"
-           role="textbox"
-           aria-label="Document page 1"
-           data-page="1"></div>
-
-      <footer class="page-footer">
-        <span class="page-number">1</span>
-      </footer>
-    </section>
-  </main>
-
-  <script>
-    // No inline event handlers are required.
-    // App initialization and event wiring live in js/app.js.
-  </script>
+  <!-- JavaScript Files -->
+  <script src="js/core.js"></script>
+  <script src="js/paginate.js"></script>
+  <script src="js/export.js"></script>
 </body>
 </html>
