@@ -18,10 +18,9 @@
   <link rel="stylesheet" href="css/page.css">
 </head>
 <body>
-  
-  <div class="app-container">
 
-   <!-- Toolbar -->
+  <div class="app-container">
+    <!-- Toolbar -->
     <div class="toolbar">
       <!-- Alignment Controls -->
       <div class="toolbar-section">
@@ -52,12 +51,11 @@
         </div>
       </div>
 
-      <!-- Font Size Control -->
+      <!-- Font Size Slider Control -->
       <div class="toolbar-section">
-        <span class="toolbar-label">Size</span>
-        <div class="font-size-wrapper">
-          <input type="number" id="fontSizeInput" value="18" min="12" max="40" onchange="changeFontSize(this.value)">
-          <span class="unit">px</span>
+        <span class="toolbar-label">Size: <span id="fontSizeValue">18</span>px</span>
+        <div class="slider-wrapper">
+          <input type="range" id="fontSizeRange" min="12" max="40" value="18" oninput="changeFontSize(this.value)">
         </div>
       </div>
 
@@ -73,9 +71,6 @@
         </button>
       </div>
     </div>
-    
-    
-   
 
     <!-- Container for A4 Pages -->
     <div id="documentPages">
