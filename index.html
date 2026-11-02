@@ -20,26 +20,47 @@
 <body>
   
   <div class="app-container">
+
     <!-- Toolbar -->
     <div class="toolbar">
-      <div class="control-group">
-        <label>এলাইনমেন্ট:</label>
-        <button onclick="setTextAlign('left')">বাম</button>
-        <button onclick="setTextAlign('center')">মাঝখান</button>
-        <button onclick="setTextAlign('right')">ডান</button>
-        <button onclick="setTextAlign('justify')">জাস্টিফাই</button>
+      <div class="toolbar-section">
+        <span class="toolbar-label">Alignment</span>
+        <div class="btn-group">
+          <button class="tool-btn" onclick="setTextAlign('left')" title="Align Left">
+            <svg width="16" height="16" fill="currentColor" viewBox="0 0 16 16"><path fill-rule="evenodd" d="M2 12.5a.5.5 0 0 1 .5-.5h7a.5.5 0 0 1 0 1h-7a.5.5 0 0 1-.5-.5zm0-3a.5.5 0 0 1 .5-.5h11a.5.5 0 0 1 0 1h-11a.5.5 0 0 1-.5-.5zm0-3a.5.5 0 0 1 .5-.5h7a.5.5 0 0 1 0 1h-7a.5.5 0 0 1-.5-.5zm0-3a.5.5 0 0 1 .5-.5h11a.5.5 0 0 1 0 1h-11a.5.5 0 0 1-.5-.5z"/></svg>
+          </button>
+          <button class="tool-btn" onclick="setTextAlign('center')" title="Align Center">
+            <svg width="16" height="16" fill="currentColor" viewBox="0 0 16 16"><path fill-rule="evenodd" d="M4 12.5a.5.5 0 0 1 .5-.5h7a.5.5 0 0 1 0 1h-7a.5.5 0 0 1-.5-.5zm-2-3a.5.5 0 0 1 .5-.5h11a.5.5 0 0 1 0 1h-11a.5.5 0 0 1-.5-.5zm2-3a.5.5 0 0 1 .5-.5h7a.5.5 0 0 1 0 1h-7a.5.5 0 0 1-.5-.5zm-2-3a.5.5 0 0 1 .5-.5h11a.5.5 0 0 1 0 1h-11a.5.5 0 0 1-.5-.5z"/></svg>
+          </button>
+          <button class="tool-btn" onclick="setTextAlign('right')" title="Align Right">
+            <svg width="16" height="16" fill="currentColor" viewBox="0 0 16 16"><path fill-rule="evenodd" d="M6 12.5a.5.5 0 0 1 .5-.5h7a.5.5 0 0 1 0 1h-7a.5.5 0 0 1-.5-.5zm-4-3a.5.5 0 0 1 .5-.5h11a.5.5 0 0 1 0 1h-11a.5.5 0 0 1-.5-.5zm2-3a.5.5 0 0 1 .5-.5h7a.5.5 0 0 1 0 1h-7a.5.5 0 0 1-.5-.5zm-2-3a.5.5 0 0 1 .5-.5h11a.5.5 0 0 1 0 1h-11a.5.5 0 0 1-.5-.5z"/></svg>
+          </button>
+          <button class="tool-btn" onclick="setTextAlign('justify')" title="Justify">
+            <svg width="16" height="16" fill="currentColor" viewBox="0 0 16 16"><path fill-rule="evenodd" d="M2 12.5a.5.5 0 0 1 .5-.5h11a.5.5 0 0 1 0 1h-11a.5.5 0 0 1-.5-.5zm0-3a.5.5 0 0 1 .5-.5h11a.5.5 0 0 1 0 1h-11a.5.5 0 0 1-.5-.5zm0-3a.5.5 0 0 1 .5-.5h11a.5.5 0 0 1 0 1h-11a.5.5 0 0 1-.5-.5zm0-3a.5.5 0 0 1 .5-.5h11a.5.5 0 0 1 0 1h-11a.5.5 0 0 1-.5-.5z"/></svg>
+          </button>
+        </div>
       </div>
 
-      <div class="control-group">
-        <label>ফন্ট সাইজ:</label>
-        <input type="number" id="fontSizeInput" value="18" min="12" max="40" onchange="changeFontSize(this.value)">
-        <span>px</span>
+      <div class="toolbar-section">
+        <span class="toolbar-label">Font Size</span>
+        <div class="font-size-wrapper">
+          <input type="number" id="fontSizeInput" value="18" min="12" max="40" onchange="changeFontSize(this.value)">
+          <span class="unit">px</span>
+        </div>
       </div>
 
-      <div class="control-group">
-        <button class="btn-secondary" id="pdfBtn" onclick="exportToPDF()">PDF ডাউনলোড</button>
-        <button class="btn-secondary" id="pngBtn" onclick="exportToPNG()">PNG ডাউনলোড</button>
+      <div class="toolbar-section action-group">
+        <button class="btn-action btn-pdf" id="pdfBtn" onclick="exportToPDF()">
+          <svg width="15" height="15" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path></svg>
+          Export PDF
+        </button>
+        <button class="btn-action btn-png" id="pngBtn" onclick="exportToPNG()">
+          <svg width="15" height="15" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"></path></svg>
+          Export PNG
+        </button>
       </div>
+    </div>
+    
     </div>
 
     <!-- Container for A4 Pages -->
