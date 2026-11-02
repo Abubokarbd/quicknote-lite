@@ -13,28 +13,25 @@ function formatText(command) {
   document.execCommand(command, false, null);
 }
 
-// 3. Change Font Size (Selected text or Global fallback)
+// 3. Smooth Font Size Slider Handler
 function changeFontSize(size) {
-  currentFontSize = size;
-  const selection = window.getSelection();
+  currentFontSize = parseInt(size);
+  if (isNaN(currentFontSize)) return;
   
-  if (selection.rangeCount > 0 && !selection.isCollapsed) {
-    // যদি লেখা সিলেক্ট করা থাকে, তবে শুধু সিলেক্ট করা অংশের ফন্ট সাইজ পরিবর্তন হবে
-    const span = document.createElement('span');
-    span.style.fontSize = size + 'px';
-    const range = selection.getRangeAt(0);
-    span.appendChild(range.extractContents());
-    range.insertNode(span);
-    
-    // পেজিনেশন আপডেট করার জন্য
-    const activeEditor = selection.anchorNode.parentElement.closest('.editor-page');
-    if (activeEditor) handleInput(activeEditor);
-  } else {
-    // লেখা সিলেক্ট করা না থাকলে পুরো পেজগুলোর বেস ফন্ট সাইজ আপডেট হবে
-    const editors = document.querySelectorAll('.editor-page');
-    editors.forEach(ed => ed.style.fontSize = size + 'px');
-    repaginate();
+  // টুলবারের পাশে লাইভ সংখ্যা আপডেট করবে
+  const sizeDisplay = document.getElementById('fontSizeValue');
+  if (sizeDisplay) {
+    sizeDisplay.innerText = currentFontSize;
   }
+  
+  // সমস্ত এডিটর পেজের ফন্ট সাইজ আপডেট করবে
+  const editors = document.querySelectorAll('.editor-page');
+  editors.forEach(ed => {
+    ed.style.fontSize = currentFontSize + 'px';
+  });
+  
+  // পেজ লেআউট এবং স্প্লিটিং রিফ্রেশ করবে
+  repaginate();
 }
 
 // 4. Language & Font Detector
