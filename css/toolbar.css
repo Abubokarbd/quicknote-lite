@@ -1,18 +1,17 @@
-/* Modern Professional Toolbar Styles */
 .toolbar {
   position: sticky;
   top: 15px;
   z-index: 1000;
   background: rgba(255, 255, 255, 0.95);
   backdrop-filter: blur(10px);
-  padding: 10px 20px;
+  padding: 10px 18px;
   border-radius: 12px;
   margin-bottom: 25px;
   box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.08), 0 8px 10px -6px rgba(0, 0, 0, 0.05);
   border: 1px solid rgba(229, 231, 235, 0.8);
   display: flex;
   flex-wrap: wrap;
-  gap: 20px;
+  gap: 15px;
   align-items: center;
   justify-content: space-between;
 }
@@ -20,13 +19,13 @@
 .toolbar-section {
   display: flex;
   align-items: center;
-  gap: 10px;
+  gap: 8px;
 }
 
 .toolbar-label {
-  font-size: 13px;
-  font-weight: 600;
-  color: #4b5563;
+  font-size: 11px;
+  font-weight: 700;
+  color: #6b7280;
   text-transform: uppercase;
   letter-spacing: 0.5px;
 }
@@ -42,9 +41,11 @@
 .tool-btn {
   background: transparent;
   border: none;
-  padding: 6px 10px;
+  padding: 5px 9px;
   border-radius: 6px;
-  color: #4b5563;
+  color: #374151;
+  font-size: 13px;
+  font-weight: 600;
   cursor: pointer;
   display: flex;
   align-items: center;
@@ -62,7 +63,7 @@
   display: flex;
   align-items: center;
   background: #f3f4f6;
-  padding: 3px 8px;
+  padding: 2px 6px;
   border-radius: 8px;
   border: 1px solid #e5e7eb;
 }
@@ -70,32 +71,32 @@
 input[type="number"] {
   border: none;
   background: transparent;
-  width: 45px;
+  width: 40px;
   text-align: center;
   font-weight: 600;
   color: #1f2937;
-  font-size: 14px;
+  font-size: 13px;
   outline: none;
 }
 
 .unit {
-  font-size: 12px;
+  font-size: 11px;
   color: #6b7280;
   font-weight: 500;
 }
 
 .action-group {
   display: flex;
-  gap: 10px;
+  gap: 8px;
 }
 
 .btn-action {
   display: flex;
   align-items: center;
-  gap: 6px;
-  padding: 8px 14px;
+  gap: 5px;
+  padding: 7px 12px;
   border-radius: 8px;
-  font-size: 13px;
+  font-size: 12px;
   font-weight: 600;
   border: none;
   cursor: pointer;
