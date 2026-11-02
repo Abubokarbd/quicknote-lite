@@ -123,3 +123,37 @@ input[type="number"] {
   background-color: #2563eb;
   box-shadow: 0 4px 12px rgba(59, 130, 246, 0.3);
 }
+
+/* স্লাইডার স্টাইল (নতুন যুক্ত হলো) */
+.slider-wrapper {
+  display: flex;
+  align-items: center;
+  background: #f3f4f6;
+  padding: 4px 10px;
+  border-radius: 8px;
+  border: 1px solid #e5e7eb;
+}
+
+input[type="range"] {
+  -webkit-appearance: none;
+  width: 100px;
+  height: 6px;
+  background: #d1d5db;
+  border-radius: 3px;
+  outline: none;
+  cursor: pointer;
+}
+
+input[type="range"]::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  width: 14px;
+  height: 14px;
+  border-radius: 50%;
+  background: #2563eb;
+  cursor: pointer;
+  transition: transform 0.1s ease;
+}
+
+input[type="range"]::-webkit-slider-thumb:hover {
+  transform: scale(1.2);
+}
