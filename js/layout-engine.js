@@ -13,7 +13,7 @@ function changeLayout(mode, buttonElement) {
   repaginate();
 }
 
-// লেআউট অনুযায়ী পেজ স্ট্রাকচার তৈরির মূল ইঞ্জিন
+// লেআউট অনুযায়ী পেজ স্ট্রাকচার এবং মাল্টি-পেজ তৈরির মূল ইঞ্জিন
 function repaginate() {
   const container = document.getElementById('documentPages');
   
@@ -21,95 +21,143 @@ function repaginate() {
   const allEditors = document.querySelectorAll('.editor-page, .grid-editor');
   let combinedText = Array.from(allEditors).map(ed => ed.innerText).join('\n').trim();
 
+  if (!combinedText) combinedText = '';
+
+  container.innerHTML = ''; // কন্টেইনার খালি করে নতুন পেজ জেনারেট করা
+
   // ১. স্ট্যান্ডার্ড A4 মোড
   if (currentLayout === 'standard') {
-    container.innerHTML = `
-      <div class="a4-page" id="page-1">
-        <div class="editor-page" contenteditable="true" oninput="handleInput(this)" onpaste="handlePaste(event, this)">${escapeHtml(combinedText)}</div>
-        <div class="page-footer">পৃষ্ঠা ১</div>
-      </div>
-    `;
+    const charLimitPerPage = 1800;
+    const totalPages = Math.max(1, Math.ceil(combinedText.length / charLimitPerPage));
+    
+    for (let i = 0; i < totalPages; i++) {
+      const pageText = combinedText.substring(i * charLimitPerPage, (i + 1) * charLimitPerPage);
+      const pageDiv = document.createElement('div');
+      pageDiv.className = 'a4-page';
+      pageDiv.id = `page-${i + 1}`;
+      pageDiv.innerHTML = `
+        <div class="editor-page" contenteditable="true" oninput="handleDynamicInput()" onpaste="handlePlainPaste(event)">${escapeHtml(pageText)}</div>
+        <div class="page-footer">পৃষ্ঠা ${i + 1}</div>
+      `;
+      container.appendChild(pageDiv);
+    }
   }
   
-  // ২. ৩-কলাম ল্যান্ডস্কেপ মোড (3 Columns)
+  // ২. ৩-কলাম ল্যান্ডস্কেপ মোড
   else if (currentLayout === '3col') {
-    container.innerHTML = `
-      <div class="a4-page layout-3col" id="page-1">
+    const charLimitPerCol = 900;
+    const charsPerPage = charLimitPerCol * 3;
+    const totalPages = Math.max(1, Math.ceil(combinedText.length / charsPerPage));
+
+    for (let i = 0; i < totalPages; i++) {
+      const pageText = combinedText.substring(i * charsPerPage, (i + 1) * charsPerPage);
+      
+      // শব্দ না ভেঙে সুবিন্যস্তভাবে টেক্সট ভাগ করার ফাংশন কল
+      const col1 = getSafeSubstring(pageText, 0, charLimitPerCol);
+      const col2 = getSafeSubstring(pageText, charLimitPerCol, charLimitPerCol * 2);
+      const col3 = getSafeSubstring(pageText, charLimitPerCol * 2, charLimitPerCol * 3);
+
+      const pageDiv = document.createElement('div');
+      pageDiv.className = 'a4-page layout-3col';
+      pageDiv.id = `page-${i + 1}`;
+      pageDiv.innerHTML = `
         <div class="editor-wrapper">
-          <div class="editor-page col-editor" contenteditable="true" oninput="handleColumnInput(this)"></div>
-          <div class="editor-page col-editor" contenteditable="true" oninput="handleColumnInput(this)"></div>
-          <div class="editor-page col-editor" contenteditable="true" oninput="handleColumnInput(this)"></div>
+          <div class="editor-page col-editor" contenteditable="true" oninput="handleDynamicInput()" onkeydown="handleBoxKeyDown(event, this, '.col-editor')" onpaste="handlePlainPaste(event)">${escapeHtml(col1)}</div>
+          <div class="editor-page col-editor" contenteditable="true" oninput="handleDynamicInput()" onkeydown="handleBoxKeyDown(event, this, '.col-editor')" onpaste="handlePlainPaste(event)">${escapeHtml(col2)}</div>
+          <div class="editor-page col-editor" contenteditable="true" oninput="handleDynamicInput()" onkeydown="handleBoxKeyDown(event, this, '.col-editor')" onpaste="handlePlainPaste(event)">${escapeHtml(col3)}</div>
         </div>
-        <div class="page-footer">পৃষ্ঠা ১ (৩ কলাম নোট)</div>
-      </div>
-    `;
-    distributeTextIntoElements(combinedText, document.querySelectorAll('.col-editor'));
+        <div class="page-footer">পৃষ্ঠা ${i + 1} (৩ কলাম নোট)</div>
+      `;
+      container.appendChild(pageDiv);
+    }
   }
 
-  // ৩. ৪-স্লাইড গ্রিড মোড (4 Grid Slides)
+  // ৩. ৪-স্লাইড গ্রিড মোড
   else if (currentLayout === '4grid') {
-    container.innerHTML = `
-      <div class="a4-page layout-4grid" id="page-1">
-        <div class="grid-cell">
-          <div class="grid-editor slide-editor" contenteditable="true" oninput="handleGridInput(this)"></div>
-          <div class="grid-footer">স্লাইড ১</div>
-        </div>
-        <div class="grid-cell">
-          <div class="grid-editor slide-editor" contenteditable="true" oninput="handleGridInput(this)"></div>
-          <div class="grid-footer">স্লাইড ২</div>
-        </div>
-        <div class="grid-cell">
-          <div class="grid-editor slide-editor" contenteditable="true" oninput="handleGridInput(this)"></div>
-          <div class="grid-footer">স্লাইড ৩</div>
-        </div>
-        <div class="grid-cell">
-          <div class="grid-editor slide-editor" contenteditable="true" oninput="handleGridInput(this)"></div>
-          <div class="grid-footer">স্লাইড ৪</div>
-        </div>
-      </div>
-    `;
-    distributeTextIntoElements(combinedText, document.querySelectorAll('.slide-editor'));
-  }
-}
+    const charLimitPerSlide = 650;
+    const charsPerPage = charLimitPerSlide * 4;
+    const totalPages = Math.max(1, Math.ceil(combinedText.length / charsPerPage));
 
-// লেখাগুলো ক্রমানুসারে একটির পর একটি বক্সে পুরো জায়গা জুড়ে সাজানো (ডুপ্লিকেট ছাড়াই)
-function distributeTextIntoElements(text, elements) {
-  if (!text) return;
-  
-  // বক্সের আকার অনুযায়ী অক্ষরের লিমিট সেট করা হলো যাতে খালি জায়গা কম থাকে
-  const charLimit = currentLayout === '3col' ? 950 : 650; 
-  
-  elements.forEach((el, index) => {
-    const start = index * charLimit;
-    const end = start + charLimit;
-    el.innerText = text.substring(start, end);
-  });
-}
+    for (let i = 0; i < totalPages; i++) {
+      const pageText = combinedText.substring(i * charsPerPage, (i + 1) * charsPerPage);
+      
+      const s1 = getSafeSubstring(pageText, 0, charLimitPerSlide);
+      const s2 = getSafeSubstring(pageText, charLimitPerSlide, charLimitPerSlide * 2);
+      const s3 = getSafeSubstring(pageText, charLimitPerSlide * 2, charLimitPerSlide * 3);
+      const s4 = getSafeSubstring(pageText, charLimitPerSlide * 3, charLimitPerSlide * 4);
 
-// ৩ কলামে টাইপ করার সময় ওভারফ্লো হলে পরের কলামে কার্সর নিয়ে যাওয়া
-function handleColumnInput(element) {
-  const editors = Array.from(document.querySelectorAll('.col-editor'));
-  const currentIndex = editors.indexOf(element);
-  
-  if (element.scrollHeight > element.clientHeight) {
-    const nextEditor = editors[currentIndex + 1];
-    if (nextEditor) {
-      nextEditor.focus();
+      const pageDiv = document.createElement('div');
+      pageDiv.className = 'a4-page layout-4grid';
+      pageDiv.id = `page-${i + 1}`;
+      pageDiv.innerHTML = `
+        <div class="grid-cell">
+          <div class="grid-editor slide-editor" contenteditable="true" oninput="handleDynamicInput()" onkeydown="handleBoxKeyDown(event, this, '.slide-editor')" onpaste="handlePlainPaste(event)">${escapeHtml(s1)}</div>
+          <div class="grid-footer">স্লাইড ১ (পেজ ${i + 1})</div>
+        </div>
+        <div class="grid-cell">
+          <div class="grid-editor slide-editor" contenteditable="true" oninput="handleDynamicInput()" onkeydown="handleBoxKeyDown(event, this, '.slide-editor')" onpaste="handlePlainPaste(event)">${escapeHtml(s2)}</div>
+          <div class="grid-footer">স্লাইড ২ (পেজ ${i + 1})</div>
+        </div>
+        <div class="grid-cell">
+          <div class="grid-editor slide-editor" contenteditable="true" oninput="handleDynamicInput()" onkeydown="handleBoxKeyDown(event, this, '.slide-editor')" onpaste="handlePlainPaste(event)">${escapeHtml(s3)}</div>
+          <div class="grid-footer">স্লাইড ৩ (পেজ ${i + 1})</div>
+        </div>
+        <div class="grid-cell">
+          <div class="grid-editor slide-editor" contenteditable="true" oninput="handleDynamicInput()" onkeydown="handleBoxKeyDown(event, this, '.slide-editor')" onpaste="handlePlainPaste(event)">${escapeHtml(s4)}</div>
+          <div class="grid-footer">স্লাইড ৪ (পেজ ${i + 1})</div>
+        </div>
+      `;
+      container.appendChild(pageDiv);
     }
   }
 }
 
-// ৪ স্লাইডে টাইপ করার সময় ওভারফ্লো হলে পরের স্লাইডে কার্সর নিয়ে যাওয়া
-function handleGridInput(element) {
-  const editors = Array.from(document.querySelectorAll('.slide-editor'));
-  const currentIndex = editors.indexOf(element);
-  
-  if (element.scrollHeight > element.clientHeight) {
-    const nextEditor = editors[currentIndex + 1];
-    if (nextEditor) {
-      nextEditor.focus(); // স্বয়ংক্রিয়ভাবে পরবর্তী স্লাইডে কার্সর চলে যাবে
+// শব্দ মাঝখান থেকে না ভেঙে নিরাপদভাবে সাবস্ট্রিং করার ফাংশন
+function getSafeSubstring(text, start, end) {
+  if (!text || start >= text.length) return '';
+  let sub = text.substring(start, end);
+  if (end < text.length && !text[end].match(/\s/)) {
+    let lastSpace = sub.lastIndexOf(' ');
+    if (lastSpace > 0) {
+      return text.substring(start, start + lastSpace);
     }
   }
+  return sub;
+}
+
+// পেস্ট করার সময় ফন্ট সাইজ ও স্টাইল দূর করে শুধু প্লেন টেক্সট রাখার ফাংশন
+function handlePlainPaste(event) {
+  event.preventDefault();
+  const text = event.clipboardData.getData('text/plain');
+  const selection = window.getSelection();
+  if (!selection.rangeCount) return;
+  selection.deleteFromDocument();
+  selection.getRangeAt(0).insertNode(document.createTextNode(text));
+}
+
+// ব্যাকস্পেস বা নেভিগেশন হ্যান্ডেল করার জন্য (বক্স ফাঁকা থাকলে আগের বক্সে যাওয়া)
+function handleBoxKeyDown(event, element, selector) {
+  const editors = Array.from(document.querySelectorAll(selector));
+  const currentIndex = editors.indexOf(element);
+
+  if (event.key === 'Backspace' && element.innerText.trim() === '' && currentIndex > 0) {
+    event.preventDefault();
+    editors[currentIndex - 1].focus();
+  } else if (event.key === 'Enter') {
+    // এন্টার চাপলে ওভারফ্লো হলে পরের বক্সে ফোকাস শিফট
+    if (element.scrollHeight > element.clientHeight && currentIndex < editors.length - 1) {
+      editors[currentIndex + 1].focus();
+    }
+  }
+}
+
+// টাইপ করার সময় স্বয়ংক্রিয়ভাবে পেজ আপডেট করার হ্যান্ডেলার
+let typingTimer;
+function handleDynamicInput() {
+  clearTimeout(typingTimer);
+  typingTimer = setTimeout(() => {
+    repaginate();
+  }, 1000); 
 }
 
 function escapeHtml(text) {
