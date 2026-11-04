@@ -11,7 +11,7 @@
   border: 1px solid rgba(229, 231, 235, 0.8);
   display: flex;
   flex-wrap: wrap;
-  gap: 12px;
+  gap: 10px;
   align-items: center;
   justify-content: center;
 }
@@ -92,6 +92,7 @@ input[type="number"] {
 
 .action-group {
   display: flex;
+  flex-direction: row !important; /* নিশ্চিত করার জন্য যেন সবসময় পাশাপাশি থাকে */
   gap: 8px;
 }
 
@@ -107,6 +108,7 @@ input[type="number"] {
   cursor: pointer;
   transition: all 0.2s ease;
   box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+  white-space: nowrap; /* লেখা যেন ভেঙে নিচে না নামে */
 }
 
 .btn-pdf {
@@ -162,16 +164,21 @@ input[type="range"]::-webkit-slider-thumb:hover {
   transform: scale(1.2);
 }
 
-/* মোবাইল রেস্পন্সিভ লেআউট */
+/* মোবাইল রেস্পন্সিভ লেআউট অপ্টিমাইজেশন */
 @media screen and (max-width: 768px) {
   .toolbar {
     justify-content: center;
-    padding: 10px;
-    gap: 8px;
+    padding: 8px;
+    gap: 6px;
   }
 
   .toolbar-section {
-    align-items: center;
-    text-align: center;
+    padding: 4px 8px;
+  }
+
+  /* মোবাইলে বাটনগুলোর সাইজ একটু কমপ্যাক্ট করা হলো যাতে এক লাইনে সুন্দরভাবে ধরে */
+  .btn-action {
+    padding: 6px 10px;
+    font-size: 11px;
   }
 }
