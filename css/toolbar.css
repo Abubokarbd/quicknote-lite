@@ -4,22 +4,27 @@
   z-index: 1000;
   background: rgba(255, 255, 255, 0.95);
   backdrop-filter: blur(10px);
-  padding: 10px 18px;
+  padding: 12px 18px;
   border-radius: 12px;
   margin-bottom: 25px;
   box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.08), 0 8px 10px -6px rgba(0, 0, 0, 0.05);
   border: 1px solid rgba(229, 231, 235, 0.8);
   display: flex;
   flex-wrap: wrap;
-  gap: 15px;
+  gap: 12px;
   align-items: center;
-  justify-content: space-between;
+  justify-content: center; /* মোবাইলে এবং ডেস্কটপে টুলবার আইটেমগুলো চমৎকারভাবে মাঝে রাখতে */
 }
 
 .toolbar-section {
   display: flex;
-  align-items: center;
-  gap: 8px;
+  flex-direction: column;
+  align-items: center; /* সেকশনগুলোর ভেতরের কনটেন্ট সেন্টারে রাখতে */
+  gap: 5px;
+  background: #f8fafc;
+  padding: 6px 10px;
+  border-radius: 8px;
+  border: 1px solid #f1f5f9;
 }
 
 .toolbar-label {
@@ -124,7 +129,7 @@ input[type="number"] {
   box-shadow: 0 4px 12px rgba(59, 130, 246, 0.3);
 }
 
-/* স্লাইডার স্টাইল (নতুন যুক্ত হলো) */
+/* স্লাইডার স্টাইল */
 .slider-wrapper {
   display: flex;
   align-items: center;
@@ -156,4 +161,25 @@ input[type="range"]::-webkit-slider-thumb {
 
 input[type="range"]::-webkit-slider-thumb:hover {
   transform: scale(1.2);
+}
+
+/* মোবাইল রেস্পন্সিভ ও সেন্টার অ্যালাইনমেন্ট অপ্টিমাইজেশন */
+@media screen and (max-width: 768px) {
+  .toolbar {
+    justify-content: center;
+    padding: 10px;
+    gap: 8px;
+  }
+
+  .toolbar-section {
+    flex: 1 1 auto;
+    align-items: center;
+    text-align: center;
+  }
+
+  .action-group {
+    width: 100%;
+    justify-content: center;
+    margin-top: 4px;
+  }
 }
