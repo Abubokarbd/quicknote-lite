@@ -76,7 +76,7 @@ function repaginate() {
 function distributeTextIntoElements(text, elements) {
   if (!text) return;
   
-  // বক্সের আকার অনুযায়ী অক্ষরের লিমিট বাড়িয়ে দেওয়া হলো যাতে খালি জায়গা কম থাকে
+  // বক্সের আকার অনুযায়ী অক্ষরের লিমিট সেট করা হলো যাতে খালি জায়গা কম থাকে
   const charLimit = currentLayout === '3col' ? 950 : 650; 
   
   elements.forEach((el, index) => {
@@ -86,12 +86,30 @@ function distributeTextIntoElements(text, elements) {
   });
 }
 
+// ৩ কলামে টাইপ করার সময় ওভারফ্লো হলে পরের কলামে কার্সর নিয়ে যাওয়া
 function handleColumnInput(element) {
-  // টাইপিং হ্যান্ডেলার
+  const editors = Array.from(document.querySelectorAll('.col-editor'));
+  const currentIndex = editors.indexOf(element);
+  
+  if (element.scrollHeight > element.clientHeight) {
+    const nextEditor = editors[currentIndex + 1];
+    if (nextEditor) {
+      nextEditor.focus();
+    }
+  }
 }
 
+// ৪ স্লাইডে টাইপ করার সময় ওভারফ্লো হলে পরের স্লাইডে কার্সর নিয়ে যাওয়া
 function handleGridInput(element) {
-  // টাইপিং হ্যান্ডেলার
+  const editors = Array.from(document.querySelectorAll('.slide-editor'));
+  const currentIndex = editors.indexOf(element);
+  
+  if (element.scrollHeight > element.clientHeight) {
+    const nextEditor = editors[currentIndex + 1];
+    if (nextEditor) {
+      nextEditor.focus(); // স্বয়ংক্রিয়ভাবে পরবর্তী স্লাইডে কার্সর চলে যাবে
+    }
+  }
 }
 
 function escapeHtml(text) {
