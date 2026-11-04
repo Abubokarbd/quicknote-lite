@@ -43,7 +43,7 @@ function repaginate() {
     }
   }
   
-  // ২. ৩-কলাম ল্যান্ডস্কেপ মোড
+  // ২. ৩-কলাম ল্যান্ডস্কেপ মোড (স্বাধীন কলাম বক্স)
   else if (currentLayout === '3col') {
     const charLimitPerCol = 900;
     const charsPerPage = charLimitPerCol * 3;
@@ -52,7 +52,6 @@ function repaginate() {
     for (let i = 0; i < totalPages; i++) {
       const pageText = combinedText.substring(i * charsPerPage, (i + 1) * charsPerPage);
       
-      // শব্দ না ভেঙে সুবিন্যস্তভাবে টেক্সট ভাগ করার ফাংশন কল
       const col1 = getSafeSubstring(pageText, 0, charLimitPerCol);
       const col2 = getSafeSubstring(pageText, charLimitPerCol, charLimitPerCol * 2);
       const col3 = getSafeSubstring(pageText, charLimitPerCol * 2, charLimitPerCol * 3);
@@ -62,9 +61,9 @@ function repaginate() {
       pageDiv.id = `page-${i + 1}`;
       pageDiv.innerHTML = `
         <div class="editor-wrapper">
-          <div class="editor-page col-editor" contenteditable="true" oninput="handleDynamicInput()" onkeydown="handleBoxKeyDown(event, this, '.col-editor')" onpaste="handlePlainPaste(event)">${escapeHtml(col1)}</div>
-          <div class="editor-page col-editor" contenteditable="true" oninput="handleDynamicInput()" onkeydown="handleBoxKeyDown(event, this, '.col-editor')" onpaste="handlePlainPaste(event)">${escapeHtml(col2)}</div>
-          <div class="editor-page col-editor" contenteditable="true" oninput="handleDynamicInput()" onkeydown="handleBoxKeyDown(event, this, '.col-editor')" onpaste="handlePlainPaste(event)">${escapeHtml(col3)}</div>
+          <div class="editor-page col-editor" contenteditable="true" onkeydown="handleBoxKeyDown(event, this, '.col-editor')" onpaste="handlePlainPaste(event)">${escapeHtml(col1)}</div>
+          <div class="editor-page col-editor" contenteditable="true" onkeydown="handleBoxKeyDown(event, this, '.col-editor')" onpaste="handlePlainPaste(event)">${escapeHtml(col2)}</div>
+          <div class="editor-page col-editor" contenteditable="true" onkeydown="handleBoxKeyDown(event, this, '.col-editor')" onpaste="handlePlainPaste(event)">${escapeHtml(col3)}</div>
         </div>
         <div class="page-footer">পৃষ্ঠা ${i + 1} (৩ কলাম নোট)</div>
       `;
@@ -72,7 +71,7 @@ function repaginate() {
     }
   }
 
-  // ৩. ৪-স্লাইড গ্রিড মোড
+  // ৩. ৪-স্লাইড গ্রিড মোড (স্বাধীন স্লাইড বক্স)
   else if (currentLayout === '4grid') {
     const charLimitPerSlide = 650;
     const charsPerPage = charLimitPerSlide * 4;
@@ -91,19 +90,19 @@ function repaginate() {
       pageDiv.id = `page-${i + 1}`;
       pageDiv.innerHTML = `
         <div class="grid-cell">
-          <div class="grid-editor slide-editor" contenteditable="true" oninput="handleDynamicInput()" onkeydown="handleBoxKeyDown(event, this, '.slide-editor')" onpaste="handlePlainPaste(event)">${escapeHtml(s1)}</div>
+          <div class="grid-editor slide-editor" contenteditable="true" onkeydown="handleBoxKeyDown(event, this, '.slide-editor')" onpaste="handlePlainPaste(event)">${escapeHtml(s1)}</div>
           <div class="grid-footer">স্লাইড ১ (পেজ ${i + 1})</div>
         </div>
         <div class="grid-cell">
-          <div class="grid-editor slide-editor" contenteditable="true" oninput="handleDynamicInput()" onkeydown="handleBoxKeyDown(event, this, '.slide-editor')" onpaste="handlePlainPaste(event)">${escapeHtml(s2)}</div>
+          <div class="grid-editor slide-editor" contenteditable="true" onkeydown="handleBoxKeyDown(event, this, '.slide-editor')" onpaste="handlePlainPaste(event)">${escapeHtml(s2)}</div>
           <div class="grid-footer">স্লাইড ২ (পেজ ${i + 1})</div>
         </div>
         <div class="grid-cell">
-          <div class="grid-editor slide-editor" contenteditable="true" oninput="handleDynamicInput()" onkeydown="handleBoxKeyDown(event, this, '.slide-editor')" onpaste="handlePlainPaste(event)">${escapeHtml(s3)}</div>
+          <div class="grid-editor slide-editor" contenteditable="true" onkeydown="handleBoxKeyDown(event, this, '.slide-editor')" onpaste="handlePlainPaste(event)">${escapeHtml(s3)}</div>
           <div class="grid-footer">স্লাইড ৩ (পেজ ${i + 1})</div>
         </div>
         <div class="grid-cell">
-          <div class="grid-editor slide-editor" contenteditable="true" oninput="handleDynamicInput()" onkeydown="handleBoxKeyDown(event, this, '.slide-editor')" onpaste="handlePlainPaste(event)">${escapeHtml(s4)}</div>
+          <div class="grid-editor slide-editor" contenteditable="true" onkeydown="handleBoxKeyDown(event, this, '.slide-editor')" onpaste="handlePlainPaste(event)">${escapeHtml(s4)}</div>
           <div class="grid-footer">স্লাইড ৪ (পেজ ${i + 1})</div>
         </div>
       `;
@@ -135,28 +134,33 @@ function handlePlainPaste(event) {
   selection.getRangeAt(0).insertNode(document.createTextNode(text));
 }
 
-// ব্যাকস্পেস বা নেভিগেশন হ্যান্ডেল করার জন্য (বক্স ফাঁকা থাকলে আগের বক্সে যাওয়া)
+// ব্যাকস্পেস বা নেভিগেশন হ্যান্ডেল করার জন্য
 function handleBoxKeyDown(event, element, selector) {
   const editors = Array.from(document.querySelectorAll(selector));
   const currentIndex = editors.indexOf(element);
 
+  // কলাম বা স্লাইড পুরোপুরি খালি অবস্থায় ব্যাকস্পেস চাপলে আগের বক্সে কার্সর যাবে
   if (event.key === 'Backspace' && element.innerText.trim() === '' && currentIndex > 0) {
     event.preventDefault();
     editors[currentIndex - 1].focus();
-  } else if (event.key === 'Enter') {
-    // এন্টার চাপলে ওভারফ্লো হলে পরের বক্সে ফোকাস শিফট
+  } 
+  // স্লাইডের শেষ মাথায় এন্টার চাপলে পরের স্লাইডে কার্সর যাবে
+  else if (event.key === 'Enter') {
     if (element.scrollHeight > element.clientHeight && currentIndex < editors.length - 1) {
+      event.preventDefault();
       editors[currentIndex + 1].focus();
     }
   }
 }
 
-// টাইপ করার সময় স্বয়ংক্রিয়ভাবে পেজ আপডেট করার হ্যান্ডেলার
+// স্ট্যান্ডার্ড পেজের জন্য ডাইনামিক ইনপুট হ্যান্ডেলার
 let typingTimer;
 function handleDynamicInput() {
   clearTimeout(typingTimer);
   typingTimer = setTimeout(() => {
-    repaginate();
+    if (currentLayout === 'standard') {
+      repaginate();
+    }
   }, 1000); 
 }
 
