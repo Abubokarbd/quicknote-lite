@@ -8,12 +8,12 @@ body {
   font-family: 'SolaimanLipi', 'Times New Roman', serif;
   background-color: #eef2f6;
   color: #1f2937;
-  padding: 10px;
+  padding: 15px;
   display: flex;
   flex-direction: column;
   align-items: center;
   width: 100%;
-  overflow-x: hidden; /* ডানে-বামে অতিরিক্ত স্ক্রল হওয়া রোধ করতে */
+  overflow-x: auto; /* মোবাইলে ডানে-বামে স্ক্রোল করার সুবিধা রাখতে */
 }
 
 .app-container {
@@ -23,22 +23,12 @@ body {
   flex-direction: column;
   align-items: center;
   box-sizing: border-box;
-  padding: 0 5px;
 }
 
-/* মোবাইল ডিভাইসের জন্য A4 পেজ অটো-স্কেল ও ফিট রাখার কোড */
-@media screen and (max-width: 768px) {
-  .a4-page {
-    width: 100% !important;
-    max-width: 100% !important;
-    height: auto !important;
-    min-height: 100vh;
-    padding: 15px !important;
-    margin: 0 auto !important;
-  }
-
-  .editor-page {
-    width: 100% !important;
-    height: auto !important;
-  }
+#documentPages {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 20px;
 }
