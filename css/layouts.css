@@ -1,6 +1,4 @@
-
-
-/* ৩-কলাম ল্যান্ডস্কেপ লেআউট */
+/* ৩-কলাম ল্যান্ডস্কেপ লেআউট (Continuous Flow) */
 .a4-page.layout-3col {
   width: 297mm !important;
   height: 210mm !important;
@@ -15,13 +13,15 @@
 }
 
 .a4-page.layout-3col .editor-page {
-  width: calc((297mm - 30mm - 30mm) / 3) !important;
+  flex: 1;
   height: 100% !important;
   border-right: 1px dashed #e2e8f0;
   padding-right: 10mm;
+  outline: none;
+  overflow-y: auto;
 }
 
-/* ৪-স্লাইড (Grid) লেআউট */
+/* ৪-স্লাইড (Grid) লেআউট (Continuous Flow) */
 .a4-page.layout-4grid {
   width: 210mm !important;
   height: 297mm !important;
@@ -41,8 +41,8 @@
   justify-content: space-between;
   background: #fff;
   position: relative;
-  overflow: hidden;
   height: 100%;
+  overflow: hidden;
 }
 
 .grid-editor {
@@ -52,13 +52,5 @@
   font-size: 14px;
   line-height: 1.5;
   text-align: justify;
-  overflow: hidden;
-}
-
-.grid-footer {
-  text-align: center;
-  font-size: 10px;
-  color: #64748b;
-  border-top: 1px solid #f1f5f9;
-  padding-top: 4px;
+  overflow-y: auto; /* লেখা বেশি হলে স্ক্রল বা ফ্লো হবে */
 }
