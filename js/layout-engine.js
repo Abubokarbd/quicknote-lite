@@ -3,7 +3,7 @@ let currentLayout = 'standard'; // ডিফল্ট লেআউট ('standard
 function changeLayout(mode, buttonElement) {
   currentLayout = mode;
   
-  // লেআউট বাটনের একটিভ (active) ক্লাসের স্টাইল আপডেট
+  // বাটনের একটিভ ক্লাসের স্টাইল আপডেট
   document.querySelectorAll('.layout-selector .layout-btn').forEach(btn => btn.classList.remove('active'));
   
   if (buttonElement) {
@@ -72,29 +72,26 @@ function repaginate() {
   }
 }
 
-// লেখাগুলো সমানভাবে বা ক্রমানুসারে কলাম বা স্লাইড বক্সে ছড়িয়ে দেওয়া
+// লেখাগুলো ক্রমানুসারে একটির পর একটি বক্সে পর্যায়ক্রমে সাজানো (ডুপ্লিকেট ছাড়াই)
 function distributeTextIntoElements(text, elements) {
   if (!text) return;
-  // আনুমানিক প্রতি বক্সে অক্ষরের সীমা (বক্সের সাইজ অনুযায়ী এডজাস্ট করা যাবে)
-  const charLimit = currentLayout === '3col' ? 400 : 250; 
   
-  let currentIndex = 0;
+  // প্রতি বক্সে অক্ষরের আনুমানিক লিমিট (স্লাইড ছোট হওয়ায় প্রতি স্লাইডে নির্দিষ্ট পরিমাণ অক্ষর ধরবে)
+  const charLimit = currentLayout === '3col' ? 350 : 200; 
+  
   elements.forEach((el, index) => {
-    if (currentIndex < text.length) {
-      el.innerText = text.substring(currentIndex, currentIndex + charLimit);
-      currentIndex += charLimit;
-    }
+    const start = index * charLimit;
+    const end = start + charLimit;
+    el.innerText = text.substring(start, end);
   });
 }
 
-// ৩ কলামে টাইপ করার সময় টেক্সট ম্যানেজ করা
 function handleColumnInput(element) {
-  // এখানে লাইভ টাইপিংয়ের সময় লেখা ওভারফ্লো হলে পরবর্তী কলামে পাঠানোর লজিক কাজ করবে
+  // টাইপিং হ্যান্ডেলার
 }
 
-// ৪ স্লাইডে টাইপ করার সময় টেক্সট ম্যানেজ করা
 function handleGridInput(element) {
-  // এখানে লাইভ টাইপিংয়ের সময় লেখা ওভারফ্লো হলে পরবর্তী স্লাইডে পাঠানোর লজিক কাজ করবে
+  // টাইপিং হ্যান্ডেলার
 }
 
 function escapeHtml(text) {
