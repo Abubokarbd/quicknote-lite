@@ -8,22 +8,21 @@ body {
   font-family: 'SolaimanLipi', 'Times New Roman', serif;
   background-color: #eef2f6;
   color: #1f2937;
-  padding: 20px;
+  padding: 15px;
   display: flex;
   flex-direction: column;
   align-items: center;
-}
-
-.app-container {
-  width: 100%;
-  max-width: 850px;
-}
-body {
   overflow-x: auto; /* মোবাইলে ডানে-বামে স্ক্রোল করার সুবিধা রাখতে */
+  width: 100%;
+  box-sizing: border-box;
 }
 
 .app-container {
   width: 100%;
   max-width: 850px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
   overflow-x: visible;
+  box-sizing: border-box;
 }
