@@ -48,18 +48,28 @@ function repaginate() {
   updatePageNumbers();
 }
 
-// 7. Dynamic Page Numbering
+// 7. Dynamic Page Numbering & Blog Footer Link on Last Page
 function updatePageNumbers() {
   const pages = document.querySelectorAll('.a4-page');
   const totalPages = pages.length;
 
   pages.forEach((page, index) => {
     const footer = page.querySelector('.page-footer');
+    if (!footer) return;
+
+    const isLastPage = (index === totalPages - 1);
+
     if (totalPages === 1) {
-      footer.style.display = 'none';
+      footer.style.display = 'block';
+      footer.innerHTML = `
+        <div style="font-size: 11px; color: #94a3b8; font-weight: 500; letter-spacing: 0.5px;">www.abubokar.blogspot.com</div>
+      `;
     } else {
       footer.style.display = 'block';
-      footer.innerText = `পৃষ্ঠা ${index + 1} / ${totalPages}`;
+      footer.innerHTML = `
+        <div style="font-size: 12px; color: #64748b; margin-bottom: 2px;">পৃষ্ঠা ${index + 1} / ${totalPages}</div>
+        ${isLastPage ? '<div style="font-size: 11px; color: #94a3b8; font-weight: 500; letter-spacing: 0.5px;">www.abubokar.blogspot.com</div>' : ''}
+      `;
     }
   });
 }
