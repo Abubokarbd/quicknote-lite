@@ -13,13 +13,13 @@
   flex-wrap: wrap;
   gap: 12px;
   align-items: center;
-  justify-content: center; /* মোবাইলে এবং ডেস্কটপে টুলবার আইটেমগুলো চমৎকারভাবে মাঝে রাখতে */
+  justify-content: center;
 }
 
 .toolbar-section {
   display: flex;
   flex-direction: column;
-  align-items: center; /* সেকশনগুলোর ভেতরের কনটেন্ট সেন্টারে রাখতে */
+  align-items: center;
   gap: 5px;
   background: #f8fafc;
   padding: 6px 10px;
@@ -129,7 +129,6 @@ input[type="number"] {
   box-shadow: 0 4px 12px rgba(59, 130, 246, 0.3);
 }
 
-/* স্লাইডার স্টাইল */
 .slider-wrapper {
   display: flex;
   align-items: center;
@@ -163,7 +162,7 @@ input[type="range"]::-webkit-slider-thumb:hover {
   transform: scale(1.2);
 }
 
-/* মোবাইল রেস্পন্সিভ ও সেন্টার অ্যালাইনমেন্ট অপ্টিমাইজেশন */
+/* মোবাইল রেস্পন্সিভ লেআউট */
 @media screen and (max-width: 768px) {
   .toolbar {
     justify-content: center;
@@ -172,14 +171,7 @@ input[type="range"]::-webkit-slider-thumb:hover {
   }
 
   .toolbar-section {
-    flex: 1 1 auto;
     align-items: center;
     text-align: center;
-  }
-
-  .action-group {
-    width: 100%;
-    justify-content: center;
-    margin-top: 4px;
   }
 }
