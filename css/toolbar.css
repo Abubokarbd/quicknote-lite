@@ -14,7 +14,8 @@
   gap: 10px;
   align-items: center;
   justify-content: center;
-  width: 100%; /* মোবাইল স্ক্রিনে পুরো চওড়া ও সঠিকভাবে ফিট রাখতে */
+  width: 100%;
+  max-width: 850px; /* কন্টেইনারের বাইরে যেন না যায় */
   box-sizing: border-box;
 }
 
@@ -66,35 +67,9 @@
   box-shadow: 0 2px 4px rgba(0,0,0,0.05);
 }
 
-.font-size-wrapper {
-  display: flex;
-  align-items: center;
-  background: #f3f4f6;
-  padding: 2px 6px;
-  border-radius: 8px;
-  border: 1px solid #e5e7eb;
-}
-
-input[type="number"] {
-  border: none;
-  background: transparent;
-  width: 40px;
-  text-align: center;
-  font-weight: 600;
-  color: #1f2937;
-  font-size: 13px;
-  outline: none;
-}
-
-.unit {
-  font-size: 11px;
-  color: #6b7280;
-  font-weight: 500;
-}
-
 .action-group {
   display: flex;
-  flex-direction: row !important; /* নিশ্চিত করার জন্য যেন সবসময় পাশাপাশি থাকে */
+  flex-direction: row !important;
   gap: 8px;
 }
 
@@ -110,7 +85,7 @@ input[type="number"] {
   cursor: pointer;
   transition: all 0.2s ease;
   box-shadow: 0 2px 4px rgba(0,0,0,0.05);
-  white-space: nowrap; /* লেখা যেন ভেঙে নিচে না নামে */
+  white-space: nowrap;
 }
 
 .btn-pdf {
@@ -133,52 +108,18 @@ input[type="number"] {
   box-shadow: 0 4px 12px rgba(59, 130, 246, 0.3);
 }
 
-.slider-wrapper {
-  display: flex;
-  align-items: center;
-  background: #f3f4f6;
-  padding: 4px 10px;
-  border-radius: 8px;
-  border: 1px solid #e5e7eb;
-}
-
-input[type="range"] {
-  -webkit-appearance: none;
-  width: 100px;
-  height: 6px;
-  background: #d1d5db;
-  border-radius: 3px;
-  outline: none;
-  cursor: pointer;
-}
-
-input[type="range"]::-webkit-slider-thumb {
-  -webkit-appearance: none;
-  width: 14px;
-  height: 14px;
-  border-radius: 50%;
-  background: #2563eb;
-  cursor: pointer;
-  transition: transform 0.1s ease;
-}
-
-input[type="range"]::-webkit-slider-thumb:hover {
-  transform: scale(1.2);
-}
-
-/* মোবাইল রেস্পন্সিভ লেআউট অপ্টিমাইজেশন */
+/* মোবাইল রেস্পন্সিভ লেআউট */
 @media screen and (max-width: 768px) {
   .toolbar {
     justify-content: center;
-    padding: 8px;
-    gap: 6px;
+    padding: 10px;
+    gap: 8px;
   }
 
   .toolbar-section {
     padding: 4px 8px;
   }
 
-  /* মোবাইলে বাটনগুলোর সাইজ একটু কমপ্যাক্ট করা হলো যাতে এক লাইনে সুন্দরভাবে ধরে */
   .btn-action {
     padding: 6px 10px;
     font-size: 11px;
