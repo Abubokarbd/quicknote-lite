@@ -1,0 +1,64 @@
+/* ৩ কলাম এবং ৪ স্লাইড গ্রিড লেআউট স্টাইল */
+
+/* ৩-কলাম ল্যান্ডস্কেপ লেআউট */
+.a4-page.layout-3col {
+  width: 297mm !important;
+  height: 210mm !important;
+  padding: 15mm !important;
+}
+
+.a4-page.layout-3col .editor-wrapper {
+  display: flex;
+  gap: 15mm;
+  height: 165mm;
+  width: 100%;
+}
+
+.a4-page.layout-3col .editor-page {
+  width: calc((297mm - 30mm - 30mm) / 3) !important;
+  height: 100% !important;
+  border-right: 1px dashed #e2e8f0;
+  padding-right: 10mm;
+}
+
+/* ৪-স্লাইড (Grid) লেআউট */
+.a4-page.layout-4grid {
+  width: 210mm !important;
+  height: 297mm !important;
+  padding: 15mm !important;
+  display: grid !important;
+  grid-template-columns: 1fr 1fr;
+  grid-template-rows: 1fr 1fr;
+  gap: 10mm;
+}
+
+.grid-cell {
+  border: 1px dashed #cbd5e1;
+  border-radius: 6px;
+  padding: 10mm;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  background: #fff;
+  position: relative;
+  overflow: hidden;
+  height: 100%;
+}
+
+.grid-editor {
+  width: 100%;
+  height: calc(100% - 20px);
+  outline: none;
+  font-size: 14px;
+  line-height: 1.5;
+  text-align: justify;
+  overflow: hidden;
+}
+
+.grid-footer {
+  text-align: center;
+  font-size: 10px;
+  color: #64748b;
+  border-top: 1px solid #f1f5f9;
+  padding-top: 4px;
+}
