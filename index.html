@@ -16,6 +16,7 @@
   <link rel="stylesheet" href="css/base.css">
   <link rel="stylesheet" href="css/toolbar.css">
   <link rel="stylesheet" href="css/page.css">
+  <link rel="stylesheet" href="css/layouts.css"> <!-- নতুন লেআউট স্টাইল ফাইল -->
 </head>
 <body>
 
@@ -51,6 +52,22 @@
         </div>
       </div>
 
+      <!-- Layout Mode Selection -->
+      <div class="toolbar-section">
+        <span class="toolbar-label">Layout Mode</span>
+        <div class="layout-selector">
+          <button class="layout-btn active" onclick="changeLayout('standard', this)" title="Standard A4">
+            <span class="layout-icon"></span> A4
+          </button>
+          <button class="layout-btn" onclick="changeLayout('3col', this)" title="3 Columns">
+            <span class="layout-icon icon-3col"><span></span><span></span><span></span></span> 3 Col
+          </button>
+          <button class="layout-btn" onclick="changeLayout('4grid', this)" title="4 Grid Layout">
+            <span class="layout-icon icon-4grid"><span></span><span></span><span></span><span></span></span> 4 Slide
+          </button>
+        </div>
+      </div>
+
       <!-- Export Buttons -->
       <div class="toolbar-section action-group">
         <button class="btn-action btn-pdf" id="pdfBtn" onclick="exportToPDF()">
@@ -76,6 +93,7 @@
   <!-- JavaScript Files -->
   <script src="js/core.js"></script>
   <script src="js/paginate.js"></script>
+  <script src="js/layout-engine.js"></script> <!-- নতুন লেআউট ইঞ্জিন ফাইল -->
   <script src="js/export.js"></script>
 </body>
 </html>
