@@ -1,31 +1,72 @@
-/* ৩-কলাম ল্যান্ডস্কেপ লেআউট (Continuous Flow) */
+/* কন্টেইনার এবং পেইজ বেস স্টাইল */
+#documentPages {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 20px;
+  width: 100%;
+}
+
+.a4-page {
+  background: white;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+  box-sizing: border-box;
+  position: relative;
+}
+
+/* স্ট্যান্ডার্ড A4 পেজ */
+.a4-page:not(.layout-3col):not(.layout-4grid) {
+  width: 210mm;
+  min-height: 297mm;
+  padding: 20mm;
+}
+
+.editor-page {
+  width: 100%;
+  min-height: 250mm;
+  outline: none;
+  font-size: 16px;
+  line-height: 1.6;
+  text-align: justify;
+  word-break: break-word;
+}
+
+/* ৩-কলাম ল্যান্ডস্কেপ লেআউট */
 .a4-page.layout-3col {
-  width: 297mm !important;
-  height: 210mm !important;
-  padding: 15mm !important;
+  width: 297mm;
+  min-height: 210mm;
+  padding: 15mm;
+  display: flex;
+  flex-direction: column;
 }
 
 .a4-page.layout-3col .editor-wrapper {
   display: flex;
   gap: 15mm;
-  height: 165mm;
   width: 100%;
+  flex: 1;
 }
 
-.a4-page.layout-3col .editor-page {
+.a4-page.layout-3col .editor-page.col-editor {
   flex: 1;
-  height: 100% !important;
-  border-right: 1px dashed #e2e8f0;
+  height: 100%;
+  border-right: 1px dashed #cbd5e1;
   padding-right: 10mm;
   outline: none;
-  overflow-y: auto;
+  font-size: 14px;
+  line-height: 1.5;
+  overflow: visible; /* স্ক্রলবার বা লেখা লুকিয়ে যাওয়া বন্ধ করতে */
 }
 
-/* ৪-স্লাইড (Grid) লেআউট (Continuous Flow) */
+.a4-page.layout-3col .editor-page.col-editor:last-child {
+  border-right: none;
+}
+
+/* ৪-স্লাইড (Grid) লেআউট */
 .a4-page.layout-4grid {
-  width: 210mm !important;
-  height: 297mm !important;
-  padding: 15mm !important;
+  width: 210mm;
+  min-height: 297mm;
+  padding: 15mm;
   display: grid !important;
   grid-template-columns: 1fr 1fr;
   grid-template-rows: 1fr 1fr;
@@ -42,15 +83,24 @@
   background: #fff;
   position: relative;
   height: 100%;
-  overflow: hidden;
+  box-sizing: border-box;
 }
 
 .grid-editor {
   width: 100%;
-  height: calc(100% - 20px);
+  height: 100%;
   outline: none;
   font-size: 14px;
   line-height: 1.5;
   text-align: justify;
-  overflow-y: auto; /* লেখা বেশি হলে স্ক্রল বা ফ্লো হবে */
+  overflow: visible; /* স্ক্রলবার ও লেখা কেটে যাওয়া রোধ করতে */
+  word-break: break-word;
+}
+
+/* ফুটার স্টাইল */
+.page-footer, .grid-footer {
+  text-align: center;
+  font-size: 12px;
+  color: #64748b;
+  margin-top: 10px;
 }
