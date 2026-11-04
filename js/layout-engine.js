@@ -13,7 +13,7 @@ function changeLayout(mode, buttonElement) {
   repaginate();
 }
 
-// লেআউট অনুযায়ী পেজ স্ট্রাকচার তৈরির মূল ইঞ্জিন
+// লেআউট অনুযায়ী পেজ স্ট্রাকচার তৈরির মূল ইঞ্জিন
 function repaginate() {
   const container = document.getElementById('documentPages');
   
@@ -72,12 +72,12 @@ function repaginate() {
   }
 }
 
-// লেখাগুলো ক্রমানুসারে একটির পর একটি বক্সে পর্যায়ক্রমে সাজানো (ডুপ্লিকেট ছাড়াই)
+// লেখাগুলো ক্রমানুসারে একটির পর একটি বক্সে পুরো জায়গা জুড়ে সাজানো (ডুপ্লিকেট ছাড়াই)
 function distributeTextIntoElements(text, elements) {
   if (!text) return;
   
-  // প্রতি বক্সে অক্ষরের আনুমানিক লিমিট (স্লাইড ছোট হওয়ায় প্রতি স্লাইডে নির্দিষ্ট পরিমাণ অক্ষর ধরবে)
-  const charLimit = currentLayout === '3col' ? 350 : 200; 
+  // বক্সের আকার অনুযায়ী অক্ষরের লিমিট বাড়িয়ে দেওয়া হলো যাতে খালি জায়গা কম থাকে
+  const charLimit = currentLayout === '3col' ? 950 : 650; 
   
   elements.forEach((el, index) => {
     const start = index * charLimit;
